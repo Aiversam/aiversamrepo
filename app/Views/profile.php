@@ -66,6 +66,8 @@
         <a href="/">Home</a>
         <a href="/tasks">All Tasks</a>
         <a href="/profile">Profile</a>
+        <a href="/customers">Customers</a>
+        <a href="/users">Users</a>
         <a href="/about">About</a>
     </nav>
 

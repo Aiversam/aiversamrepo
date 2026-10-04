@@ -5,3 +5,6 @@
 /writable/logs/*
 /writable/session/*
 /writable/debugbar/*
+/public/uploads/*
+!/public/uploads/index.html
+!/public/uploads/avatar-placeholder.svg

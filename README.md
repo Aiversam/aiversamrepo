@@ -1,4 +1,24 @@
-# CodeIgniter 4 Framework
+# IT0049 POS Application — TFA3
+
+This CodeIgniter 4 project implements the TFA3 customer and user account forms, validation, edit workflows, and user avatar uploads.
+
+## Setup
+
+1. Configure the `default` database group in `app/Config/Database.php` (or the equivalent environment variables) to point to your TFA2 POS database.
+2. Confirm the database contains `customers` (`id`, `full_name`, `email`) and `users` (`id`, `username`, `full_name`, and optionally `email`) tables. The user account table must have a unique `username` column.
+3. Apply the avatar column migration once with `php spark migrate`. It adds a nullable `avatar` column to `users`.
+4. Point the web server document root to this project's `public` directory. For a local development server, run `php spark serve` from the project root.
+5. The PHP image extension (GD or Imagick) must be enabled for avatar resizing.
+
+## TFA3 pages
+
+- `/customers` lists customers; `/customers/new` creates one; `/customers/edit/{id}` edits one.
+- `/users` lists users and their prepared avatars; `/users/new` creates one; `/users/edit/{id}` edits one and accepts a JPG or PNG avatar up to 2 MB.
+- Uploaded avatar thumbnails are stored under `public/uploads`; the database stores only each generated filename. Users without an uploaded image use `public/uploads/avatar-placeholder.svg`.
+
+The project does not include database credentials or a database export. Export your configured POS database separately when preparing the final submission.
+
+## Framework information
 
 ## What is CodeIgniter?
 
