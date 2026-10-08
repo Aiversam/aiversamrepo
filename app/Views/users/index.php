@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>User Accounts</title>
     <style>
-        body{font:16px Arial,sans-serif;background:#f4f7fb;color:#263248;margin:0}header,th{background:#1e3a5f;color:#fff}header,main{padding:22px max(20px,8%)}nav{background:#fff;padding:16px max(20px,8%)}nav a{margin-right:18px;color:#2563eb;text-decoration:none;font-weight:bold}main{max-width:1000px;margin:25px auto}.card{background:#fff;padding:22px;border-radius:10px;overflow:auto}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px;border-bottom:1px solid #e2e8f0;vertical-align:middle}a.button{display:inline-block;background:#2563eb;color:white;padding:10px 14px;border-radius:6px;text-decoration:none}.avatar{width:56px;height:56px;object-fit:cover;border-radius:50%}.notice{padding:12px;background:#dcfce7;color:#166534;border-radius:6px}
+        body{font:16px Arial,sans-serif;background:#f4f7fb;color:#263248;margin:0}header,th{background:#1e3a5f;color:#fff}header,main{padding:22px max(20px,8%)}nav{background:#fff;padding:16px max(20px,8%)}nav a{margin-right:18px;color:#2563eb;text-decoration:none;font-weight:bold}nav form{display:inline;margin:0}nav button.logout{border:0;border-radius:6px;background:#1e3a5f;color:#fff;padding:9px 14px;font:bold 14px Arial,sans-serif;cursor:pointer;transition:background .15s ease}nav button.logout:hover{background:#2563eb}nav button.logout:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}main{max-width:1000px;margin:25px auto}.card{background:#fff;padding:22px;border-radius:10px;overflow:auto}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px;border-bottom:1px solid #e2e8f0;vertical-align:middle}a.button{display:inline-block;background:#2563eb;color:white;padding:10px 14px;border-radius:6px;text-decoration:none}.avatar{width:56px;height:56px;object-fit:cover;border-radius:50%}.notice{padding:12px;background:#dcfce7;color:#166534;border-radius:6px}
     </style>
 </head>
 <body>
 <header><h1>User Accounts</h1><p>Manage users and their profile pictures.</p></header>
-<nav><a href="<?= site_url('/') ?>">Home</a><a href="<?= site_url('customers') ?>">Customers</a><a href="<?= site_url('users') ?>">Users</a><a href="<?= site_url('tasks') ?>">Tasks</a></nav>
+<nav><a href="<?= site_url('/') ?>">Home</a><a href="<?= site_url('tasks') ?>">All Tasks</a><a href="<?= site_url('profile') ?>">Profile</a><a href="<?= site_url('customers') ?>">Customers</a><a href="<?= site_url('users') ?>">Users</a><a href="<?= site_url('about') ?>">About</a><form action="<?= site_url('logout') ?>" method="post"><?= csrf_field() ?><button class="logout" type="submit">Log out</button></form></nav>
 <main>
     <p><a class="button" href="<?= site_url('users/new') ?>">Add user</a></p>
     <?php if (session()->getFlashdata('success')): ?><p class="notice"><?= esc(session()->getFlashdata('success')) ?></p><?php endif ?>

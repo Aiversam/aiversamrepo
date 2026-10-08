@@ -1,12 +1,12 @@
-# IT0049 POS Application — TFA3
+# IT0049 POS Application — TFA4: Sessions and Authentication
 
-This CodeIgniter 4 project implements the TFA3 customer and user account forms, validation, edit workflows, and user avatar uploads.
+This CodeIgniter 4 project implements the TFA3 customer and user account forms, validation, edit workflows, and user avatar uploads, with TFA4 staff authentication and session based access control.
 
 ## Setup
 
 1. Configure the `default` database group in `app/Config/Database.php` (or the equivalent environment variables) to point to your TFA2 POS database.
 2. Confirm the database contains `customers` (`id`, `full_name`, `email`) and `users` (`id`, `username`, `full_name`, and optionally `email`) tables. The user account table must have a unique `username` column.
-3. Apply the avatar column migration once with `php spark migrate`. It adds a nullable `avatar` column to `users`.
+3. Run `php spark migrate` to apply the avatar and password migrations. The password migration adds `users.password` and assigns existing accounts the starter password `password` using `password_hash()`. Sign in with an existing username and change this starter password by editing the user account.
 4. Point the web server document root to this project's `public` directory. For a local development server, run `php spark serve` from the project root.
 5. The PHP image extension (GD or Imagick) must be enabled for avatar resizing.
 
@@ -14,6 +14,8 @@ This CodeIgniter 4 project implements the TFA3 customer and user account forms, 
 
 - `/customers` lists customers; `/customers/new` creates one; `/customers/edit/{id}` edits one.
 - `/users` lists users and their prepared avatars; `/users/new` creates one; `/users/edit/{id}` edits one and accepts a JPG or PNG avatar up to 2 MB.
+- `/login` authenticates staff with `password_verify()`; customer and user account routes redirect here unless the session is authenticated. Use the Log out button to destroy the session.
+- New users must have a password of at least eight characters. On the edit form, leave the password blank to keep it or enter a new one to replace it.
 - Uploaded avatar thumbnails are stored under `public/uploads`; the database stores only each generated filename. Users without an uploaded image use `public/uploads/avatar-placeholder.svg`.
 
 The project does not include database credentials or a database export. Export your configured POS database separately when preparing the final submission.

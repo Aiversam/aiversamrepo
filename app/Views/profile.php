@@ -32,6 +32,10 @@
             font-weight: bold;
         }
 
+        nav form { display: inline; margin: 0; }
+        nav button.logout { border: 0; border-radius: 6px; background: #1e3a5f; color: #fff; padding: 9px 14px; font: bold 14px Arial, sans-serif; cursor: pointer; }
+        nav button.logout:hover { background: #2563eb; }
+
         main {
             max-width: 700px;
             margin: 40px auto;
@@ -69,6 +73,12 @@
         <a href="/customers">Customers</a>
         <a href="/users">Users</a>
         <a href="/about">About</a>
+        <?php if (session()->get('user_id')): ?>
+            <form action="<?= site_url('logout') ?>" method="post">
+                <?= csrf_field() ?>
+                <button class="logout" type="submit">Log out</button>
+            </form>
+        <?php endif ?>
     </nav>
 
     <main>

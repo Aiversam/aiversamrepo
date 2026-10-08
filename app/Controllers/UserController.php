@@ -11,7 +11,10 @@ class UserController extends BaseController
     public function index()
     {
         return view('users/index', [
-            'users' => (new UserModel())->orderBy('full_name', 'ASC')->findAll(),
+            'users' => (new UserModel())
+                ->select('id, username, full_name, email, avatar')
+                ->orderBy('full_name', 'ASC')
+                ->findAll(),
         ]);
     }
 
@@ -30,6 +33,7 @@ class UserController extends BaseController
     {
         $rules = [
             'username' => 'required|max_length[100]|is_unique[users.username]',
+            'password' => 'required|min_length[8]|max_length[255]',
             'full_name' => 'required|max_length[255]',
             'email' => 'permit_empty|valid_email|max_length[255]',
         ];
@@ -44,7 +48,9 @@ class UserController extends BaseController
             ]);
         }
 
-        (new UserModel())->insert($this->userFromPost());
+        $data = $this->userFromPost();
+        $data['password'] = password_hash((string) $this->request->getPost('password'), PASSWORD_DEFAULT);
+        (new UserModel())->insert($data);
 
         return redirect()->to(site_url('users'))->with('success', 'User added successfully.');
     }
@@ -79,6 +85,11 @@ class UserController extends BaseController
             'email' => 'permit_empty|valid_email|max_length[255]',
         ];
 
+        $password = (string) $this->request->getPost('password');
+        if ($password !== '') {
+            $rules['password'] = 'min_length[8]|max_length[255]';
+        }
+
         $avatar = $this->request->getFile('avatar');
         $hasUpload = $avatar !== null && $avatar->getError() !== UPLOAD_ERR_NO_FILE;
         if ($hasUpload) {
@@ -96,6 +107,9 @@ class UserController extends BaseController
         }
 
         $data = $this->userFromPost();
+        if ($password !== '') {
+            $data['password'] = password_hash($password, PASSWORD_DEFAULT);
+        }
         $newAvatarName = null;
         if ($hasUpload) {
             $newAvatarName = $avatar->getRandomName();
